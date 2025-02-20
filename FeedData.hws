@@ -1,0 +1,32 @@
+Global FeedData = {}
+FeedData._data = {}
+
+Function FeedData.Get(feedid$, key)
+    Local t = RawGet(FeedData._data, LowerStr(feedid$))
+    If GetType(t) = #TABLE Then Return (RawGet(t, key))
+    Return (Nil)
+EndFunction
+
+Function FeedData.Set(feedid$, key, value)
+    Local id$ = LowerStr(feedid$)
+    Local t = RawGet(FeedData._data, id$)
+    If GetType(t) <> #TABLE
+        t = {}
+        FeedData._data[id$] = t
+    EndIf
+
+    RawSet(t, key, value)
+EndFunction
+
+Function FeedData.IsEqualOrSet(feedid$, key, value)
+    Local id$ = LowerStr(feedid$)
+    Local t = RawGet(FeedData._data, id$)
+    If GetType(t) <> #TABLE
+        t = {}
+        FeedData._data[id$] = t
+    EndIf
+
+    If RawGet(t, key) = value Then Return (True)
+    RawSet(t, key, value)
+    Return (False)
+EndFunction

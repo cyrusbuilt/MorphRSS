@@ -1,0 +1,61 @@
+@INCLUDE "Feed.hws"
+
+Const #FEED_DEFAULT_PARENT = "Root"
+Cosnt #FEED_JSON_FILE = "feeds.json"
+
+Global DefaultFeeds = {}
+DefaultFeeds._feeds = {}
+DefaultFeeds._parent$ = #FEED_DEFAULT_PARENT
+
+Function DefaultFeeds.AddDefaultFeed(id$)
+    InsertItem(DefaultFeeds._feeds, Feed:New(id$, id$, False, DefaultFeeds._parent$))
+EndFunction
+
+Function DefaultFeeds.AddDefaultGroup(name$)
+    InsertItem(DefaultFeeds._feeds, Feed:New(name$, "\27b" .. name$, True, #FEED_DEFAULT_PARENT))
+    DefaultFeeds._parent$ = name$
+EndFunction
+
+Function DefaultFeeds.Generate()
+    DefaultFeeds.AddDefaultFeed("https://www.powerpc-notebook.org/en/feed/")
+    DefaultFeeds.AddDefaultFeed("https://www.powerpc-notebook.org/en/comments/feed/")
+    DefaultFeeds.AddDefaultFeed("http://rss.slashdot.org/Slashdot/slashdotMain")
+    DefaultFeeds.AddDefaultFeed("http://osnews.com/files/recent.xml")
+    DefaultFeeds.AddDefaultFeed("https://hackaday.com/feed")
+    
+    DefaultFeeds.AddDefaultGroup("Amiga")
+    DefaultFeeds.AddDefaultFeed("http://aminet.net/feed")
+    DefaultFeeds.AddDefaultFeed("http://www.amiga-future.de/rss_en.php")
+    DefaultFeeds.AddDefaultFeed("http://amigaworld.net/modules/newsfeed/news_rss.php")
+    DefaultFeeds.AddDefaultFeed("https://www.amigans.net/backend.php")
+    DefaultFeeds.AddDefaultFeed("http://forum.amiga.org/index.php?action=.xml;board=2;type=rss")
+    DefaultFeeds.AddDefaultFeed("http://eab.abime.net/external.php")
+    DefaultFeeds.AddDefaultFeed("http://blog.a-eon.biz/blog/?feed=rss2")
+    DefaultFeeds.AddDefaultFeed("https://www.acube-systems.biz/inc/rss.php")
+    DefaultFeeds.AddDefaultFeed("https://www.hyperion-entertainment.com/index.php?format=feed&type=rss")
+    DefaultFeeds.AddDefaultFeed("http://feeds.feedburner.com/AmigaFrance")
+    DefaultFeeds.AddDefaultFeed("http://leblogdecosmos.blogspot.com/feeds/posts/default?alt=rss")
+    DefaultFeeds.AddDefaultFeed("https://amiga-news.de/en/backends/news/rss20.xml")
+    DefaultFeeds.AddDefaultFeed("https://www.amigaimpact.org/feed/")
+    DefaultFeeds.AddDefaultFeed("https://www.amigaimpact.org/comments/feed/")
+    DefaultFeeds.AddDefaultFeed("https://www.amigaportal.cz/external?type=rss2")
+    DefaultFeeds.AddDefaultFeed("https://www.amigaportal.cz/external?type=rss2&amp;nodeid=1")
+    DefaultFeeds.AddDefaultFeed("https://www.ppa.pl/aktualnosci/rss/")
+    DefaultFeeds.AddDefaultFeed("https://amiga.gr/rss.xml")
+    DefaultFeeds.AddDefaultFeed("https://boingsworld.de/boingsworld.xml")
+    DefaultFeeds.AddDefaultFeed("https://lesdocs.fr/amiga/feed/")
+    DefaultFeeds.AddDefaultFeed("https://lesdocs.fr/comments/feed/")
+    DefaultFeeds.AddDefaultFeed("https://www.triplea.fr/blog/feed/underscore/")
+    
+    DefaultFeeds.AddDefaultGroup("MorphOS")
+    DefaultFeeds.AddDefaultFeed("http://feed.morph.zone/news")
+    DefaultFeeds.AddDefaultFeed("http://feed.morph.zone/forum")
+    DefaultFeeds.AddDefaultFeed("https://www.morphos-storage.net/includes/rss.php")
+    DefaultFeeds.AddDefaultFeed("https://www.meta-morphos.org/backend.php")
+    DefaultFeeds.AddDefaultFeed("https://morphos.pl/rss")
+    DefaultFeeds.AddDefaultFeed("http://aminet.net/feed?arch[]=ppc-morphos")
+    DefaultFeeds.AddDefaultFeed("http://powerpc.lukysoft.cz/rss.xml")
+    DefaultFeeds.AddDefaultFeed("http://powerpc.lukysoft.cz/crss")
+
+    StringToFile(SerializeTable(DefaultFeeds._feeds), #FEED_JSON_FILE)
+EndFunction

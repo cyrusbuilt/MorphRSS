@@ -1,0 +1,18 @@
+Global Feed = {}
+Feed.id = ""
+Feed.name = ""
+Feed.isNode = False
+Feed.parent = ""
+
+Function Feed:New(id$, name$, isNode, parent)
+    If IsNil(id$) Then id$ = ""
+    If IsNil(name$) Then name$ = ""
+    If IsNil(isNode) Then isNode = False
+    If IsNil(parent) Then parent = ""
+    Local instance = CopyTable(self)
+    instance.id = id$
+    instance.name = name$
+    instance.isNode = isNode
+    instance.parent = parent
+    Return (instance)
+EndFunction
