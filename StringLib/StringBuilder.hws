@@ -1,0 +1,56 @@
+@INCLUDE "StringUtils.hws"
+
+Global StringBuilder = {}
+StringBuilder._storage = {}
+
+Function StringBuilder:New()
+    Return (CopyTable(self))
+EndFunction
+
+Function StringBuilder:Count()
+    Return (ListItems(self._storage))
+EndFunction
+
+Function StringBuilder:ToString()
+    Local result = StringUtils.EMPTY
+    If (Not IsTableEmpty(self._storage))
+        result = StringUtils.Join(self._storage, StringUtils.EMPTY)
+    EndIf
+
+    Return (result)
+EndFunction
+
+Function StringBuilder:Length()
+    Return (StrLen(self:ToString()))
+EndFunction
+
+Function StringBuilder:Append(inString)
+    InsertItem(self._storage, inString)
+EndFunction
+
+Function StringBuilder:Replace(index, replacementStr)
+    RemoveItem(self._storage, index)
+    InsertItem(self._storage, replacementStr, index)
+EndFunction
+
+Function StringBuilder:Remove(index)
+    RemoveItem(self._storage, index)
+EndFunction
+
+Function StringBuilder:GetIndex(inString)
+    Local index = -1
+    Local i
+    For i = 0 To ListItems(self._storage) - 1
+        Local item = GetItem(self._storage, i)
+        If (CompareStr(item, inString) = 0)
+            index = i
+            Break
+        EndIf
+    Next
+
+    Return (index)
+EndFunction
+
+Function StringBuilder:Clear()
+    self._storage = CreateList()
+EndFunction

@@ -1,0 +1,8 @@
+RapaEdit.code-workspace
+gitmui*
+
+# Cached icons
+IconCache/
+
+# MorphOS folder descriptors
+*.info

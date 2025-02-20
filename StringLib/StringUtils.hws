@@ -1,0 +1,317 @@
+Global StringUtils = {}
+StringUtils.DEFAULT_PAD_CHAR = " "
+StringUtils.EMPTY = ""
+StringUtils.VERSION = "1.0.0.1"
+StringUtils._backspaceChar = 8
+StringUtils._crChar = 13
+StringUtils._doubleQuoteChar = 34
+StringUtils._formFeedChar = 12
+StringUtils._nilChar = 10
+StringUtils._singleQuoteChar = 39
+StringUtils._spaceChar = 32
+StringUtils._tabChar = 9
+
+Function StringUtils.Backspace()
+    Return (Chr(StringUtils._backspaceChar))
+EndFunction
+
+Function StringUtils.Contains(haystack, needle)
+    Return (CountStr(haystack, needle) > 0)
+EndFunction
+
+Function StringUtils.Quote(inString)
+    Local result = inString
+    If (LeftStr(result, 1) <> Chr(StringUtils._doubleQuoteChar))
+        result = Chr(StringUtils._doubleQuoteChar) .. result
+    EndIf
+
+    If (RightStr(result, 1) <> Chr(StringUtils._doubleQuoteChar))
+        result = result .. Chr(StringUtils._doubleQuoteChar)
+    EndIf
+
+    Return (result)
+EndFunction
+
+Function StringUtils.IndexOf(haystack, needle, start)
+	If IsNil(start) Then start = 0
+    Return (FindStr(haystack, needle, True, start))
+EndFunction
+
+Function StringUtils.TrimQuotes(inString)
+    Local result = inString
+    If (LeftStr(result, 1) = Chr(StringUtils._doubleQuoteChar))
+        result = MidStr(result, 2)
+    EndIf
+
+    If (RightStr(result, 1) = Chr(StringUtils._doubleQuoteChar))
+        result = MidStr(result, 1, StrLen(result) - 1)
+    EndIf
+
+    Return (result)
+EndFunction
+
+Function StringUtils.Substring(inString, startPos, len)
+    Return (MidStr(inString, startPos, len))
+EndFunction
+
+Function StringUtils.StringTrim(inString)
+    Return (StripStr(inString))
+EndFunction
+
+Function StringUtils.IsEmpty(inString)
+    Return (IsNil(inString) Or EmptyStr(inString))
+EndFunction
+
+Function StringUtils.ToString(input)
+    Return (ToString(input))
+EndFunction
+
+Function StringUtils.StartsWith(inString, prefix)
+    Return (StartsWith(inString, prefix))
+EndFunction
+
+Function StringUtils.EndsWith(inString, postfix)
+    Return (EndsWith(inString, postfix))
+EndFunction
+
+Function StringUtils.Create(inChar, len)
+    Local input = inChar
+    If (StringUtils.IsEmpty(input) Or input = StringUtils.EMPTY)
+        input = StringUtils.DEFAULT_PAD_CHAR
+    EndIf
+
+    Local sb = StringUtils.EMPTY
+    Local i = 1
+    For i = 1 To len
+        sb = sb .. input
+    Next
+
+    Return (sb)
+EndFunction
+
+Function StringUtils.PadLeft(input, pad, len)
+    If (StringUtils.IsEmpty(pad) Or pad = StringUtils.EMPTY)
+        pad = StringUtils.DEFAULT_PAD_CHAR
+    EndIf
+
+    Local sb = StringUtils.EMPTY
+    Local i = 1
+    For i = 1 To len
+        sb = sb .. pad
+    Next
+
+    sb = sb + input
+    Return (sb)
+EndFunction
+
+Function StringUtils.PadRight(input, pad, len)
+    If (StringUtils.IsEmpty(pad) Or pad = StringUtils.EMPTY)
+        pad = StringUtils.DEFAULT_PAD_CHAR
+    EndIf
+
+    Local sb = input
+    Local i = 1
+    For i = 1 To len
+        sb = sb .. pad
+    Next
+
+    Return (sb)
+EndFunction
+
+Function StringUtils.Pad(input, pad, len)
+    If (StringUtils.IsEmpty(pad) Or pad = StringUtils.EMPTY)
+        pad = StringUtils.DEFAULT_PAD_CHAR
+    EndIf
+
+    Local p = StringUtils.Create(pad, len)
+    Return (p .. input .. p)
+EndFunction
+
+Function StringUtils.PadCenter(input, pad, len)
+    If (StringUtils.IsEmpty(pad) Or pad = StringUtils.EMPTY)
+        pad = StringUtils.DEFAULT_PAD_CHAR
+    EndIf
+
+    If (StrLen(input) > 2 And len > 0)
+        Local firstHalf = StringUtils.Substring(input, 0, StrLen(input) \ 2)
+        Local secondHalf = StringUtils.Substring(input, StrLen(input) \ 2, StrLen(input))
+        Local padStr = StringUtils.Create(pad, len)
+        Return (firstHalf .. padStr .. secondHalf)
+    EndIf
+
+    Return (input)
+EndFunction
+
+Function StringUtils.StringLength(inString)
+    Return (StrLen(inString))
+EndFunction
+
+Function StringUtils.StripPrettyPrintChars(inString)
+    Local result = inString
+    result = ReplaceStr(result, Chr(StringUtils._crChar), StringUtils.EMPTY)
+    result = ReplaceStr(result, Chr(StringUtils._nilChar), StringUtils.EMPTY)
+    result = ReplaceStr(result, Chr(StringUtils._tabChar), StringUtils.EMPTY)
+    Return (result)
+EndFunction
+
+Function StringUtils.StringReplace(inString, oldString, newString, allOccurrences)
+	If IsNil(allOccurrences)
+		allOccurrences = False
+	EndIf
+
+    If (allOccurrences)
+        Return (ReplaceStr(inString, oldString, newString))
+    EndIf
+
+    ; We're only replacing the first occurrence of the string.
+    ; So we need 2 things: The starting position of oldString in inString,
+    ; and the length of oldString (if found)
+    Local startPos = FindStr(inString, oldString)
+    If (startPos <> -1)
+        Local oldStrLen = StrLen(oldString)
+        If (oldStrLen > 0)
+            Local firstHalf = StringUtils.Substring(inString, 0, startPos)
+            Local endPos = startPos + oldStrLen
+            Local secondHalf = StringUtils.Substring(inString, endPos, StrLen(inString) - oldStrLen)
+            Return (firstHalf .. newString .. secondHalf)
+        EndIf
+    EndIf
+
+    Return (inString)
+EndFunction
+
+Function StringUtils.StringSplit(inString, delimiter)
+    Return (SplitStr(inString, delimiter))
+EndFunction
+
+Function StringUtils.ConvertToUTF8(inString)
+    Return (ConvertStr(inString, #ENCODING_RAW, #ENCODING_UTF8))
+EndFunction
+
+Function StringUtils.CR()
+    Return (Chr(StringUtils._crChar))
+EndFunction
+
+Function StringUtils.LF()
+    Return (Chr(StringUtils._nilChar))
+EndFunction
+
+Function StringUtils.Tab()
+    Return (Chr(StringUtils._tabChar))
+EndFunction
+
+Function StringUtils.CRLF()
+    Return (Chr(StringUtils._crChar) .. Chr(StringUtils._nilChar))
+EndFunction
+
+Function StringUtils.Backspace()
+    Return (Chr(StringUtils._backspaceChar))
+EndFunction
+
+Function StringUtils.FormFeed()
+    Return (Chr(StringUtils._formFeedChar))
+EndFunction
+
+Function StringUtils.ParseDateFromYMDHMSString(inString)
+    Local hasDash = StringUtils.Contains(inString, "-")
+    Local hasColon = StringUtils.Contains(inString, ":")
+
+    If (Not hasDash And Not hasColon)
+        Return (False, Nil)
+    EndIf
+
+    Local dateStr = StringUtils.StringReplace(inString, "T", StringUtils.DEFAULT_PAD_CHAR)
+    dateStr = StringUtils.StringReplace(dateStr, "Z", StringUtils.EMPTY)
+
+    Local dtParts = StringUtils.StringSplit(dateStr, StringUtils.DEFAULT_PAD_CHAR)
+	Local dateParts = {}
+    If (hasDash)
+        dateParts = StringUtils.StringSplit(dtParts[0], "-")
+        If (ListItems(dateParts) <> 3)
+            Return (False, Nil)
+        EndIf
+
+        If (StrLen(dateParts[0]) <> 4 Or Not IsDigit(dateParts[0]))
+            Return (False, Nil)
+        EndIf
+
+        If (StrLen(dateParts[1]) <> 2 Or Not IsDigit(dateParts[1]))
+            Return (False, Nil)
+        EndIf
+
+        If (StrLen(dateParts[2]) <> 2 Or Not IsDigit(dateParts[2]))
+            Return (False, Nil)
+        EndIf
+    EndIf
+
+	Local timeParts = {}
+    If (hasColon)
+        timeParts = StringUtils.StringSplit(dtParts[1], ":")
+        If (ListItems(timeParts) <> 3)
+            Return (False, Nil)
+        EndIf
+
+		Local n, i = NextItem(timeParts)
+		While GetType(n) <> #NIL
+    		If (StringUtils.Contains(i, "."))
+				Local secParts = StringUtils.StringSplit(i, ".")
+				i = secParts[0]
+			EndIf
+			
+			If (StrLen(i) <> 2 Or Not IsDigit(i))
+				Return(False, Nil)
+			EndIf
+			
+			n, i = NextItem(timeParts, n)
+		Wend
+	EndIf
+
+	Local spec = GetDate(#DATELOCAL)
+    Local date = ParseDate(spec)
+    If (hasDash)
+        date.Year = ToNumber(dateParts[0])
+        date.Mon = ToNumber(dateParts[1])
+        date.MDay = ToNumber(dateParts[2])
+    EndIf
+
+    If (hasColon)
+        date.Hour = ToNumber(timeParts[0])
+        date.Min = ToNumber(timeParts[1])
+        date.Sec = ToNumber(timeParts[2])
+    EndIf
+
+    Return (True, date)
+EndFunction
+
+Function StringUtils.DateToTimestamp(inDate)
+    If (IsNil(inDate) Or GetType(inDate) <> #TABLE)
+        Return (StringUtils.EMPTY)
+    EndIf
+
+    Local result = ToString(inDate.Year) .. "-" .. ToString(inDate.Mon) .. "-" .. ToString(inDate.MDay)
+    result = result .. StringUtils.DEFAULT_PAD_CHAR .. ToString(inDate.Hour) .. ":"
+    result = result .. ToString(inDate.Min) .. ":" .. ToString(inDate.Sec) .. "Z"
+    Return (result)
+EndFunction
+
+Function StringUtils.Join(inStrArray, delimiter)
+    If (GetType(inStrArray) = #STRING)
+        Return (inStrArray .. delimiter)
+    EndIf
+
+    If (IsNil(inStrArray) Or GetType(inStrArray) <> #TABLE)
+        Return (StringUtils.EMPTY)
+    EndIf
+
+    Local result = StringUtils.EMPTY
+	Local s
+    For s In inStrArray
+        If (StrLen(result) > 0)
+            result = result .. delimiter
+        EndIf
+
+        result = result .. s
+    Next
+
+    Return (result)
+EndFunction

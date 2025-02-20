@@ -1,0 +1,21 @@
+; We need at least Hollywood 10.0!
+@VERSION 10,0
+
+; Enable DPI-awareness so that our GUI looks sharp even on high DPI monitors
+@OPTIONS {DPIAware = True}
+
+; App info
+@APPTITLE "MorphRSS"
+@APPVERSION "$VER: MorphRSS 1.0"
+@APPCOPYRIGHT "© 2025, Chris 'Cyrus' Brunner"
+@APPAUTHOR "Chris 'Cyrus' Brunner"
+@APPDESCRIPTION "RSS reader for MorphOS"
+@APPIDENTIFIER "net.cyrusbuilt.morphrss"
+
+; We need the hURL and RapaGUI plugins
+@REQUIRE "hurl"
+
+; Enter event loop
+Repeat
+    WaitEvent()
+Forever
