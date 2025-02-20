@@ -1,7 +1,7 @@
 @INCLUDE "Feed.hws"
 
 Const #FEED_DEFAULT_PARENT = "Root"
-Cosnt #FEED_JSON_FILE = "feeds.json"
+Const #FEED_JSON_FILE = "feeds.json"
 
 Global DefaultFeeds = {}
 DefaultFeeds._feeds = {}
