@@ -1,0 +1,254 @@
+@INCLUDE "AppUtil.hws"
+@INCLUDE "FeedData.hws"
+@INCLUDE "FeedItem.hws"
+@INCLUDE "HtmlParser.hws"
+@INCLUDE "StringLib/StringUtils.hws"
+
+Const #FP_LOGO_BRUSH_ID = 2
+
+Global FeedParser = {}
+FeedParser._parsers = {}
+FeedParser._itemsList = {}
+FeedParser._currentItem = {}
+FeedParser._channelLevel = True
+FeedParser._currentElement$ = StringUtils.EMPTY
+FeedParser._oldguids = {}
+FeedParser._guids = {}
+FeedParser._imageLoaded = False
+FeedParser._feedId = StringUtils.EMPTY
+FeedParser._link = StringUtils.EMPTY
+
+Function FeedParser.Clear()
+    ; TODO GUI stuff
+
+    FeedParser._itemsList = {}
+    FeedParser._channelLevel = True
+    FeedParser._currentElement$ = Nil
+    FeedParser._currentItem = FeedItem:New()
+EndFunction
+
+Function FeedParser.OpenLink(muid)
+    If StringUtils.IsEmpty(muid) Then Return ()
+    Local url$ = mui.Get(muid, "Contents")
+    If Not StringUtils.IsEmpty(url$)
+        OpenURL(url$)
+    EndIf
+EndFunction
+
+Function FeedParser.StartElement(name$)
+    If StringUtils.IsEmpty(name$) Then Return ()
+    FeedParser._currentElement$ = name$
+    If name$ = "item" Or name$ = "entry"
+        FeedParser._channelLevel = False
+    EndIf
+EndFunction
+
+Function FeedParser.EndElement(name$)
+    FeedParser._currentElement$ = Nil
+    If name$ = "item" Or name$ = "entry"
+        Local preparse = StringUtils.EMPTY
+        If Not StringUtils.IsEmpty(FeedParser._currentItem.guid)
+            FeedParser._currentItem.guid = MD5Str(FeedParser._currentItem.guid)
+            If HaveItem(FeedParser._oldguids, FeedParser._currentItem.guid)
+                FeedParser._guids[FeedParser._currentItem.guid] = 1
+            Else
+                preparse = "\27b"
+            EndIf
+        EndIf
+
+        ; TODO GUI stuff
+
+        InsertItem(FeedParser._itemsList, FeedParser._currentItem)
+        CheckEvents()
+        FeedParser._currentItem = FeedItem:New()
+    EndIf
+EndFunction
+
+Function FeedParser.LoadImage()
+    If Not AppUtil.AllowImages Or FeedParser._imageLoaded Then Return ()
+    Local extension$ = FeedData.Get(FeedParser._feedId, "imageformat")
+    If StringUtils.IsEmpty(extension$) Then Return ()
+
+    Local filename$ = AppUtil.GetLogoName(FeedParser._feedId, extension$)
+    Local ret, t = IsPicture(filename$, {Loader = "Inbuilt"})
+    If Not ret Then Return ()
+
+    Local brushProps = {LoadImage=t.Alpha, LoadTransparency=t.Transparency}
+    Local errCode, _id = ?LoadBrush(#FP_LOGO_BRUSH_ID, filename$, brushProps)
+    If errCode <> #ERR_NONE
+        ; TODO GUI stuff
+        Return ()
+    EndIf
+
+    If t.Height > 32
+        ScaleBrush(#FP_LOGO_BRUSH_ID, #KEEPASPRAT, 32)
+    EndIf
+
+    ; TODO GUI stuff
+    FeedParser._imageLoaded = True
+EndFunction
+
+Function FeedParser.DownloadImage(str$)
+    If Not AppUtil.AllowImages Or FeedParser._imageLoaded Then Return ()
+    Local extension$ = "image"
+    If StringUtils.StringLength(str$) > 4
+        Switch LowerStr(RightStr(str$, 4))
+        Case "ilbm":
+            FallThrough
+        Case ".lbm":
+            extension$ = "ilbm"
+        Case ".png":
+            extension$ = "png"
+        Case ".gif":
+            extension$ = "gif"
+        Case "jpeg":
+            FallThrough
+        Case ".jpg":
+            extension$ = "jpg"
+        Case ".bmp":
+            extension$ = "bmp"
+        EndSwitch
+    EndIf
+
+    Local url$ = AppUtil.ReconstructURL(FeedParser._link, str$)
+    Local file$ = AppUtil.GetLogoName(FeedParser._feedId, extension$)
+    Local enc = FindStr(url$, "%", True) <> -1
+    Local opts = {File=file$, Adapter="hurl", Fail404=True, Encoded=enc}
+    Local errCode, _emptyStr$, count = ?DownloadFile(url$, opts)
+    ; TODO replay
+    FeedData.Set(FeedParser._feedId, "imageformat", extension$)
+    FeedParser.LoadImage()
+EndFunction
+
+Function FeedParser.ProcessCharData(str$)
+    If FeedParser._channelLevel
+        Switch FeedParser._currentElement$
+        Case "title":
+            ; TODO Set channel title
+        Case "description":
+            ; TODO set channel description
+        Case "id":
+            FallThrough
+        Case "link":
+            FeedParser._link = StripStr(str$)
+            ; TODO set channel link
+        Case "url":
+            FallThrough
+        Case "logo":
+            FeedParser.DownloadImage(StripStr(str$))
+        EndSwitch
+    Else
+        FeedParser._currentItem.guid = FeedParser._currentItem.guid .. str$
+        Switch FeedParser._currentElement$
+        Case "title":
+            FeedParser._currentItem.title = HtmlParser.GenerateLabelText(str$)
+        Case "dc:creator":
+            FallThrough
+        Case "author":
+            FeedParser._currentItem.author = StripStr(str$)
+        Case "guid":
+            If StringUtils.IsEmpty(FeedParser._currentItem.link)
+                FeedParser._currentItem.link = StripStr(str$)
+            EndIf
+        Case "updated":
+            FallThrough
+        Case "pubDate":
+            FeedParser._currentItem.pubdate = StripStr(str$)
+        Case "summary":
+            FallThrough
+        Case "atom:summary":
+            FallThrough
+        Case "description":
+            FeedParser._currentItem.description = FeedParser._currentItem.description .. StripStr(str$)
+        Case "content":
+            FallThrough
+        Case "content:encoded":
+            FeedParser._currentItem = FeedParser._currentItem.content .. StripStr(str$)
+        Case "id":
+            FallThrough
+        Case "link":
+            FeedParser._currentItem.link = StripStr(str$)
+        Case "category":
+            If StringUtils.IsEmpty(FeedParser._currentItem.category)
+                FeedParser._currentItem = HtmlParser.GenerateLabelText(str$)
+            Else
+                Local cat = FeedParser._currentItem.category .. ", "
+                cat = cat .. HtmlParser.GenerateLabelText(str$)
+                FeedParser._currentItem.category = cat
+            EndIf
+        EndSwitch
+    EndIf
+EndFunction
+
+Function FeedParser.Load(feedid$)
+    Local errCode, xml$, _len = ?FileToString(AppUtil.GetXmlName(feedid$))
+    If errCode <> #ERR_NONE
+        ; TODO notify/set status
+        Return ()
+    EndIf
+
+    Local lastParser = GetItem(FeedParser._parsers, -1)
+    If Not IsNil(lastParser)
+        lastParser:Stop()
+    EndIf
+
+    FeedParser._feedId = feedid$
+    FeedParser._link = feedid$
+    FeedParser.Clear()
+
+    If AppUtil.AllowImages
+        FeedParser._imageLoaded = False
+        FeedParser.LoadImage()
+        If Not FeedParser._imageLoaded
+            ; TODO Set feedimage
+        EndIf
+    EndIf
+
+    Local t = FeedData.Get(feedid$, "guids")
+    If GetType(t) = #TABLE
+        FeedParser._oldguids = t
+    Else
+        FeedParser._oldguids = {}
+    EndIf
+
+    FeedParser._guids = {}
+
+    Local parserOpts = {
+        StartElement = Function(p, name$, attrs) FeedParser.StartElement(name$) EndFunction,
+        EndElement = Function(p, name$) FeedParser.EndElement(name$) EndFunction,
+        CharacterData = Function(p, s$) FeedParser.ProcessCharData(s$) EndFunction
+    }
+    Local p = XMLParser.New(parserOpts)
+    InsertItem(FeedParser._parsers, p)
+    DebugPrint("Created parser ", ToString(ListItems(FeedParser._parsers)))
+
+    p:SetBase(feedid$)
+    p:Parse(xml$)
+
+    Local errCode = ?p:Close()
+    Local errName = GetErrorName(errCode)
+    DebugPrint("Parser closed ", ToString(ListItems(FeedParser._parsers)))
+    RemoveItem(FeedParser._parsers)
+
+    If errName = "Error closing parser: unknown encoding!"
+        FeedParser.Clear()
+        Local p = XMLParser.New(parserOpts)
+        InsertItem(FeedParser._parsers, p)
+        DebugPrint("Created parser ", ToString(ListItems(FeedParser._parsers)))
+
+        p:SetBase(feedid$)
+        xml$ = ConvertStr(xml$, #ENCODING_RAW, #ENCODING_UTF8)
+        p:SetEncoding("UTF-8")
+        p:Parse(xml$)
+
+        errCode = ?p:Close()
+        DebugPrint("Parser closed ", ToString(ListItems(FeedParser._parsers)))
+        RemoveItem(FeedParser._parsers)
+    EndIf
+
+    If FeedParser._feedId = feedid$
+        FeedData.Set(feedid$, "guids", FeedParser._guids)
+    EndIf
+EndFunction
+
+; TODO Show article func? Or should that live in a window func?

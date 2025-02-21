@@ -1,0 +1,8 @@
+Global MIME_Types = {}
+MIME_Types["application/rss+xml"] = 2
+MIME_Types["application/atom+xml"] = 2
+MIME_Types["application/rdf+xml"] = 1
+MIME_Types["application/xml"] = 1
+MIME_Types["text/rss+xml"] = 2
+MIME_Types["text/atom+xml"] = 2
+MIME_Types["text/xml"] = 1

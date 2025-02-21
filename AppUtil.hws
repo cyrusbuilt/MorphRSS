@@ -1,0 +1,43 @@
+@INCLUDE "StringLib/StringUtils.hws"
+
+Global AppUtil = {}
+AppUtil.AllowImages = True
+AppUtil.ChannelIconBrushId = 1
+AppUtil.StopActions = True
+
+Function AppUtil.GetFileID(feedid$)
+    Return (LeftStr(MD5Str(feedid$), 26))
+EndFunction
+
+Function AppUtil.GetXmlName(feedid$)
+    Return ("Feeds/" .. AppUtil.GetFileID(feedid$) .. ".xml")
+EndFunction
+
+Function AppUtil.GetLogoName(feedid$, extension$)
+    Return ("Feeds/" .. AppUtil.GetFileID(feedid$) .. "." .. extension$)
+EndFunction
+
+Function AppUtil.ReconstructURL(base$, href$)
+    href$ = StringUtils.StringTrim(href$)
+    If StringUtils.StartsWith(href$, "http")
+        Return (href$)
+    EndIf
+
+    If StringUtils.StartsWith(href$, "/")
+        Local hostPos = StringUtils.IndexOf(base$, "//") + 2
+        Local hostEnd = StringUtils.IndexOf(base$, "/", hostPos)
+        If hostEnd = -1
+            Return (base$ .. href$)
+        Else
+            Return (LeftStr(base$, hostEnd) .. href$)
+        EndIf
+    EndIf
+
+    Local paramPos = StringUtils.IndexOf(base$, "?")
+    If paramPos > 0
+        Local drawerPos = ReverseFindStr(base$, "/", True, paramPos)
+        Return (LeftStr(base$, drawerPos + 1) .. href$)
+    EndIf
+
+    Return (TrimStr(base$, "/", True) .. "/" .. href$)
+EndFunction

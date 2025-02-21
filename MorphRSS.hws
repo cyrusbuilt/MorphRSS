@@ -12,8 +12,9 @@
 @APPDESCRIPTION "RSS reader for MorphOS"
 @APPIDENTIFIER "net.cyrusbuilt.morphrss"
 
-; We need the hURL and RapaGUI plugins
+; We need the hURL and XML plugins
 @REQUIRE "hurl"
+@REQUIRE "xmlparser" 
 
 ; Enter event loop
 Repeat

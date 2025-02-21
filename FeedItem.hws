@@ -1,0 +1,13 @@
+Global FeedItem = {}
+FeedItem.author = ""
+FeedItem.title = ""
+FeedItem.link = ""
+FeedItem.content = ""
+FeedItem.pubdate = ""
+FeedItem.category = ""
+FeedItem.description = ""
+FeedItem.guid = ""
+
+Function FeedItem:New()
+    Return (CopyTable(self))
+EndFunction

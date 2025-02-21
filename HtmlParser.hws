@@ -1,0 +1,333 @@
+html_table = {}
+html_table["amp"] = 38
+html_table["lt"] = 60
+html_table["gt"] = 62
+html_table["nbsp"] = 160
+html_table["iexcl"] = 161
+html_table["cent"] = 162
+html_table["pound"] = 163
+html_table["curren"] = 164
+html_table["yen"] = 165
+html_table["brvbar"] = 166
+html_table["sect"] = 167
+html_table["uml"] = 168
+html_table["copy"] = 169
+html_table["ordf"] = 170
+html_table["laquo"] = 171
+html_table["not"] = 172
+html_table["shy"] = 173
+html_table["reg"] = 174
+html_table["macr"] = 175
+html_table["deg"] = 176
+html_table["plusmn"] = 177
+html_table["sup2"] = 178
+html_table["sup3"] = 179
+html_table["acute"] = 180
+html_table["micro"] = 181
+html_table["para"] = 182
+html_table["cedil"] = 184
+html_table["sup1"] = 185
+html_table["ordm"] = 186
+html_table["raquo"] = 187
+html_table["frac14"] = 188
+html_table["frac12"] = 189
+html_table["frac34"] = 190
+html_table["iquest"] = 191
+html_table["times"] = 215
+html_table["divide"] = 247
+html_table["OElig"] = 338
+html_table["oelig"] = 339
+html_table["Scaron"] = 352
+html_table["scaron"] = 353
+html_table["Yuml"] = 376
+html_table["fnof"] = 402
+html_table["circ"] = 710
+html_table["tilde"] = 732
+html_table["ensp"] = 8194
+html_table["emsp"] = 8195
+html_table["thinsp"] = 8201
+html_table["zwnj"] = 8204
+html_table["zwj"] = 8205
+html_table["lrm"] = 8206
+html_table["rlm"] = 8207
+html_table["ndash"] = 8211
+html_table["mdash"] = 8212
+html_table["lsquo"] = 8216
+html_table["rsquo"] = 8217
+html_table["sbquo"] = 8218
+html_table["ldquo"] = 8220
+html_table["rdquo"] = 8221
+html_table["bdquo"] = 8222
+html_table["dagger"] = 8224
+html_table["Dagger"] = 8225
+html_table["bull"] = 8226
+html_table["hellip"] = 8230
+html_table["permil"] = 8240
+html_table["prime"] = 8242
+html_table["Prime"] = 8243
+html_table["lsaquo"] = 8249
+html_table["rsaquo"] = 8250
+html_table["oline"] = 8254
+html_table["euro"] = 8364
+html_table["trade"] = 8482
+html_table["larr"] = 8592
+html_table["uarr"] = 8593
+html_table["rarr"] = 8594
+html_table["darr"] = 8595
+html_table["harr"] = 8596
+html_table["crarr"] = 8629
+html_table["lceil"] = 8968
+html_table["rceil"] = 8969
+html_table["lfloor"] = 8970
+html_table["rfloor"] = 8971
+html_table["loz"] = 9674
+html_table["spades"] = 9824
+html_table["clubs"] = 9827
+html_table["hearts"] = 9829
+html_table["diams"] = 9830
+html_table["nbsp"] = 160
+html_table["iexcl"] = 161
+html_table["cent"] = 162
+html_table["pound"] = 163
+html_table["curren"] = 164
+html_table["yen"] = 165
+html_table["brvbar"] = 166
+html_table["sect"] = 167
+html_table["uml"] = 168
+html_table["copy"] = 169
+html_table["ordf"] = 170
+html_table["laquo"] = 171
+html_table["not"] = 172
+html_table["shy"] = 173
+html_table["reg"] = 174
+html_table["macr"] = 175
+html_table["deg"] = 176
+html_table["plusmn"] = 177
+html_table["sup2"] = 178
+html_table["sup3"] = 179
+html_table["acute"] = 180
+html_table["micro"] = 181
+html_table["para"] = 182
+html_table["middot"] = 183
+html_table["cedil"] = 184
+html_table["sup1"] = 185
+html_table["ordm"] = 186
+html_table["raquo"] = 187
+html_table["frac14"] = 188
+html_table["frac12"] = 189
+html_table["frac34"] = 190
+html_table["iquest"] = 191
+html_table["Agrave"] = 192
+html_table["Aacute"] = 193
+html_table["Acirc"] = 194
+html_table["Atilde"] = 195
+html_table["Auml"] = 196
+html_table["Aring"] = 197
+html_table["AElig"] = 198
+html_table["Ccedil"] = 199
+html_table["Egrave"] = 200
+html_table["Eacute"] = 201
+html_table["Ecirc"] = 202
+html_table["Euml"] = 203
+html_table["Igrave"] = 204
+html_table["Iacute"] = 205
+html_table["Icirc"] = 206
+html_table["Iuml"] = 207
+html_table["ETH"] = 208
+html_table["Ntilde"] = 209
+html_table["Ograve"] = 210
+html_table["Oacute"] = 211
+html_table["Ocirc"] = 212
+html_table["Otilde"] = 213
+html_table["Ouml"] = 214
+html_table["times"] = 215
+html_table["Oslash"] = 216
+html_table["Ugrave"] = 217
+html_table["Uacute"] = 218
+html_table["Ucirc"] = 219
+html_table["Uuml"] = 220
+html_table["Yacute"] = 221
+html_table["THORN"] = 222
+html_table["szlig"] = 223
+html_table["agrave"] = 224
+html_table["aacute"] = 225
+html_table["acirc"] = 226
+html_table["atilde"] = 227
+html_table["auml"] = 228
+html_table["aring"] = 229
+html_table["aelig"] = 230
+html_table["ccedil"] = 231
+html_table["egrave"] = 232
+html_table["eacute"] = 233
+html_table["ecirc"] = 234
+html_table["euml"] = 235
+html_table["igrave"] = 236
+html_table["iacute"] = 237
+html_table["icirc"] = 238
+html_table["iuml"] = 239
+html_table["eth"] = 240
+html_table["ntilde"] = 241
+html_table["ograve"] = 242
+html_table["oacute"] = 243
+html_table["ocirc"] = 244
+html_table["otilde"] = 245
+html_table["ouml"] = 246
+html_table["divide"] = 247
+html_table["oslash"] = 248
+html_table["ugrave"] = 249
+html_table["uacute"] = 250
+html_table["ucirc"] = 251
+html_table["uuml"] = 252
+html_table["yacute"] = 253
+html_table["thorn"] = 254
+html_table["yuml"] = 255
+html_table["OElig"] = 338
+html_table["oelig"] = 339
+html_table["Scaron"] = 352
+html_table["scaron"] = 353
+html_table["Yuml"] = 376
+html_table["fnof"] = 402
+html_table["circ"] = 710
+html_table["tilde"] = 732
+html_table["ensp"] = 8194
+html_table["emsp"] = 8195
+html_table["thinsp"] = 8201
+html_table["zwnj"] = 8204
+html_table["zwj"] = 8205
+html_table["lrm"] = 8206
+html_table["rlm"] = 8207
+html_table["ndash"] = 8211
+html_table["mdash"] = 8212
+html_table["lsquo"] = 8216
+html_table["rsquo"] = 8217
+html_table["sbquo"] = 8218
+html_table["ldquo"] = 8220
+html_table["rdquo"] = 8221
+html_table["bdquo"] = 8222
+html_table["dagger"] = 8224
+html_table["Dagger"] = 8225
+html_table["bull"] = 8226
+html_table["hellip"] = 8230
+html_table["permil"] = 8240
+html_table["prime"] = 8242
+html_table["Prime"] = 8243
+html_table["lsaquo"] = 8249
+html_table["rsaquo"] = 8250
+html_table["oline"] = 8254
+html_table["frasl"] = 8260
+html_table["euro"] = 8364
+html_table["image"] = 8465
+html_table["weierp"] = 8472
+html_table["real"] = 8476
+html_table["trade"] = 8482
+html_table["alefsym"] = 8501
+html_table["larr"] = 8592
+html_table["uarr"] = 8593
+html_table["rarr"] = 8594
+html_table["darr"] = 8595
+html_table["harr"] = 8596
+html_table["crarr"] = 8629
+html_table["lArr"] = 8656
+html_table["uArr"] = 8657
+html_table["rArr"] = 8658
+html_table["dArr"] = 8659
+html_table["hArr"] = 8660
+
+Global HtmlParser = {}
+
+Function HtmlParser.XChar(str$)
+    Return (Chr(Val("0x" .. str$)))
+EndFunction
+
+Function HtmlParser.HtmlChr(str$)
+    Local code = RawGet(html_table, str$)
+    If IsNil(code) Then Return ("&" .. str$)
+    Return (Chr(code))
+EndFunction
+
+Function HtmlParser.ReplaceHtmlTokens(html$)
+    html$ = ReplaceStr(html$, "&nbsp;", "\194\160", False, 0, #ENCODING_RAW)
+	html$ = ReplaceStr(html$, "&#160;", "\194\160", True, 0, #ENCODING_RAW)
+	html$ = ReplaceStr(html$, "&nbsp;", "\194\160", False, 0, #ENCODING_RAW)
+	
+	html$ = ReplaceStr(html$, "&mdash;", "--", False, 0, #ENCODING_RAW)
+	html$ = ReplaceStr(html$, "&ndash;", "-", False, 0, #ENCODING_RAW)
+	html$ = ReplaceStr(html$, "&#8211;", "-", True, 0, #ENCODING_RAW)
+	
+	html$ = ReplaceStr(html$, "&amp;", "&", False, 0, #ENCODING_RAW)
+	html$ = ReplaceStr(html$, "&#38;", "&", True, 0, #ENCODING_RAW)
+	
+	html$ = ReplaceStr(html$, "&quot;", "\34", False, 0, #ENCODING_RAW)
+	html$ = ReplaceStr(html$, "&laquo;", "\194\171", False, 0, #ENCODING_RAW)
+	html$ = ReplaceStr(html$, "&raquo;", "\194\187", False, 0, #ENCODING_RAW)
+	html$ = ReplaceStr(html$, "&#8217;", "\'", False, 0, #ENCODING_RAW)
+	html$ = ReplaceStr(html$, "&#8230;", "...", False, 0, #ENCODING_RAW)
+	html$ = ReplaceStr(html$, "&hellip;", "...", False, 0, #ENCODING_RAW)
+	
+	html$ = ReplaceStr(html$, "&lt;", "<", False, 0, #ENCODING_RAW)
+	html$ = ReplaceStr(html$, "&gt;", ">", False, 0, #ENCODING_RAW)
+	
+	html$ = PatternReplaceStr(html$, "&#(%d+);", Chr)
+	html$ = PatternReplaceStr(html$, "&#x(%x+);", xChr)
+	html$ = PatternReplaceStr(html$, "&(.-);", htmlChr)
+	
+	Return (html$)
+EndFunction
+
+Function HtmlParser.ParseHTML(html$)
+    html$ = ReplaceStr(html$, "<br>", "\n", False, 0, #ENCODING_RAW)
+	html$ = ReplaceStr(html$, "<br />", "\n", False, 0, #ENCODING_RAW)
+	html$ = ReplaceStr(html$, "<p>", "\n", False, 0, #ENCODING_RAW)
+	html$ = ReplaceStr(html$, "</p>", "\n", False, 0, #ENCODING_RAW)
+	html$ = ReplaceStr(html$, "<u>", "\27u", False, 0, #ENCODING_RAW)
+	html$ = ReplaceStr(html$, "</u>", "\27n", False, 0, #ENCODING_RAW)
+	html$ = ReplaceStr(html$, "<b>", "\27b", False, 0, #ENCODING_RAW)
+	html$ = ReplaceStr(html$, "</b>", "\27n", False, 0, #ENCODING_RAW)
+	html$ = ReplaceStr(html$, "<i>", "\27i", False, 0, #ENCODING_RAW)
+	html$ = ReplaceStr(html$, "</i>", "\27n", False, 0, #ENCODING_RAW)
+	html$ = ReplaceStr(html$, "<em>", "\27i", False, 0, #ENCODING_RAW)
+	html$ = ReplaceStr(html$, "</em>", "\27n", False, 0, #ENCODING_RAW)
+	html$ = ReplaceStr(html$, "<li>", "- ", False, 0, #ENCODING_RAW)
+	html$ = ReplaceStr(html$, "</li>", "\n", False, 0, #ENCODING_RAW)
+	html$ = ReplaceStr(html$, "<strong>", "\27b", False, 0, #ENCODING_RAW)
+	html$ = ReplaceStr(html$, "</strong>", "\27n", False, 0, #ENCODING_RAW)
+	
+	html$ = ReplaceStr(html$, "[br]", "\n", False, 0, #ENCODING_RAW)
+	html$ = ReplaceStr(html$, "[p]", "\n", False, 0, #ENCODING_RAW)
+	html$ = ReplaceStr(html$, "[/p]", "\n", False, 0, #ENCODING_RAW)
+	html$ = ReplaceStr(html$, "[u]", "\27u", False, 0, #ENCODING_RAW)
+	html$ = ReplaceStr(html$, "[/u]", "\27n", False, 0, #ENCODING_RAW)
+	html$ = ReplaceStr(html$, "[b]", "\27b", False, 0, #ENCODING_RAW)
+	html$ = ReplaceStr(html$, "[/b]", "\27n", False, 0, #ENCODING_RAW)
+	html$ = ReplaceStr(html$, "[i]", "\27i", False, 0, #ENCODING_RAW)
+	html$ = ReplaceStr(html$, "[/i]", "\27n", False, 0, #ENCODING_RAW)
+	html$ = ReplaceStr(html$, "[em]", "\27i", False, 0, #ENCODING_RAW)
+	html$ = ReplaceStr(html$, "[/em]", "\27n", False, 0, #ENCODING_RAW)
+	html$ = ReplaceStr(html$, "[li]", "- ", False, 0, #ENCODING_RAW)
+	html$ = ReplaceStr(html$, "[/li]", "\n", False, 0, #ENCODING_RAW)
+	html$ = ReplaceStr(html$, "[strong]", "\27b", False, 0, #ENCODING_RAW)
+	html$ = ReplaceStr(html$, "[/strong]", "\27n", False, 0, #ENCODING_RAW)
+	
+	Return (html$)
+EndFunction
+
+Function HtmlParser.StripHTML(html$)
+    html$ = ReplaceStr(html$, "</a>", "", False, 0, #ENCODING_RAW)
+	html$ = ReplaceStr(html$, "</div>", "", False, 0, #ENCODING_RAW)
+	html$ = ReplaceStr(html$, "</span>", "", False, 0, #ENCODING_RAW)
+	html$ = PatternReplaceStr(html$, "<.->", "")
+	Return (html$)
+EndFunction
+
+Function HtmlParser.GenerateTextFieldText(html$)
+    html$ = HtmlParser.ParseHTML(html$)
+    html$ = HtmlParser.StripHTML(html$)
+    html$ = HtmlParser.ReplaceHtmlTokens(html$)
+    Return (StripStr(html$))
+EndFunction
+
+Function HtmlParser.GenerateLabelText(html$)
+    html$ = HtmlParser.StripHTML(html$)
+    html$ = HtmlParser.ReplaceHtmlTokens(html$)
+    Return (StripStr(html$))
+EndFunction
